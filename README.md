@@ -26,8 +26,8 @@ If there is a problem with the usage of our product:
  - contact us through myrzakunbekovis@gmail.com, or through direct messages on github
  
  The project contributors are:
-  - Iskender 
-  - Aibike 
-  - Erik 
-  - Aizirek
-  - Baiastan
+  - Iskender Imanaliev
+  - Aibike Omorova
+  - Erik Temiraliev
+  - Aizirek Ibraimova
+  - Baiastan Tagaibekov
