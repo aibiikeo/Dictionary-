@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 import googletrans
 from googletrans import Translator
 from tkinter.simpledialog import askstring
+import sys
 
 def enter():
-    url_word = str(entry.get())
-    
+    url_word = str(entry.get())   
     return url_word
 
 def word():
@@ -26,46 +26,40 @@ def word():
         d = d.replace("See more.", "")
         d = d.split('"')[1]
         d = d.replace("definition,", "-")
-        return d
-        
+        return d     
     except AttributeError:
-        messagebox.showinfo("Result", "Please enter valid data!")
+        messagebox.showinfo("Result", "Please enter the correct word!")
+        sys.exit()
     except ValueError:
-        messagebox.showinfo("Result", "Please enter valid data!")
+        messagebox.showinfo("Result", "Please enter the correct word!")
+        sys.exit()
     
 
 def sentence():
-    try:
-        url = 'https://sentencedict.com/' + enter() + '.html'
+    url = 'https://sentencedict.com/' + enter() + '.html'
 
-        g = requests.get(url)
-        soup = BeautifulSoup(g.content, 'html5lib') 
+    g = requests.get(url)
+    soup = BeautifulSoup(g.content, 'html5lib') 
 
-        table = soup.find('meta', attrs = {'name':'description'})
+    table = soup.find('meta', attrs = {'name':'description'})
 
-        s = table.prettify()
-        s = s.split('"')[1]
-        s = s.split(':')[1]
-        s = s.replace("?",".")
-        s = s.replace("!",".")
-        s = s.split('.')
-        snt = []
-        for i in range (0,6):
-            if i != 0 and i % 2 != 0: 
-                snt.append(s[i].strip())
-        s=' .\n'.join(snt)
-        s='\n\nExamples:\n' + s
-        return s
-        
-    except AttributeError:
-        messagebox.showinfo("Result", "Please enter valid data!")
-    except ValueError:
-        messagebox.showinfo("Result", "Please enter valid data!")
+    s = table.prettify()
+    s = s.split('"')[1]
+    s = s.split(':')[1]
+    s = s.replace("?",".")
+    s = s.replace("!",".")
+    s = s.split('.')
+    snt = []
+    for i in range (0,6):
+         if i != 0 and i % 2 != 0: 
+             snt.append(s[i].strip())
+    s=' .\n'.join(snt)
+    s='\n\nExamples:\n' + s
+    return s
 
 def to():
     to = askstring('Language','Translate to:', parent=window)
     return to
-
 
 def translation():
     try:
@@ -78,23 +72,15 @@ def translation():
         return t
     
     except AttributeError:
-        messagebox.showinfo("Result", "Please enter valid data!")
+        messagebox.showinfo("Result", "Please enter valid language!")
+        sys.exit()
     except ValueError:
-        messagebox.showinfo("Result", "Please enter valid data!")
-
-        
+        messagebox.showinfo("Result", "Please enter valid language!")
+        sys.exit()        
 
 def all():
-    try:
-        a=word()+sentence()+translation()
-    except AttributeError:
-        messagebox.showinfo("Result", "Please enter valid data!")
-    except ValueError:
-        messagebox.showinfo("Result", "Please enter valid data!")
-    else:
-        messagebox.showinfo("Result", a)
-    
-
+    a=word()+sentence()+translation()
+    messagebox.showinfo("Result", a)
 
 
 window = Tk()
@@ -115,6 +101,5 @@ btn.place(relx=0.44, rely=0.65)
  
 entry = Entry(frame, bg='white', bd=3, width=30, font=('Verdana', 15))
 entry.place(relx=0.09, rely=0.35)
-
 
 window.mainloop()
