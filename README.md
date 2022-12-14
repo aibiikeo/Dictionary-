@@ -27,7 +27,7 @@ If there is a problem with the usage of our product:
  
  The project contributors are:
   - Iskender Imanaliev
-  - Aibike Omorova
+  - Aibiike Omorova
   - Erik Temiraliev
   - Aizirek Ibraimova
   - Baiastan Tagaibekov
