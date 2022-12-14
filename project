@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup 
 import googletrans 
 from googletrans import Translator 
+from tkinter.simpledialog import askstring 
  
 def enter(): 
     url_word = str(entry.get()) 
@@ -25,8 +26,6 @@ def word():
         d = d.replace("See more.", "") 
         d = d.split('"')[1] 
         d = d.replace("definition,", "-") 
-        d = d.replace('The definition of ','') 
-        d = d.replace('See additional meanings and similar words.','') 
         return d 
          
     except AttributeError: 
@@ -62,21 +61,32 @@ def sentence():
         messagebox.showinfo("Result", "Please enter valid data!") 
     except ValueError: 
         messagebox.showinfo("Result", "Please enter valid data!") 
-     
+ 
+def fr(): 
+    fr = askstring('Language','From:', parent=window) 
+    return fr 
+def to(): 
+    to = askstring('Language','To:', parent=window) 
+    return to 
  
  
 def translation(): 
     try: 
-         
+        base_lan = fr() 
+        base_dest = to() 
+        keylan = list(googletrans.LANGUAGES.keys())[list(googletrans.LANGUAGES.values()).index(base_lan)] 
+        keydest = list(googletrans.LANGUAGES.keys())[list(googletrans.LANGUAGES.values()).index(base_dest)] 
         translator = Translator() 
-        result = translator.translate(enter(), src = 'en',dest = 'ru') 
+        result = translator.translate(enter(), src = keylan,dest = keydest) 
         t = '\n\nTranslation:\n' + result.text 
         return t 
      
     except AttributeError: 
         messagebox.showinfo("Result", "Please enter valid data!") 
     except ValueError: 
-        messagebox.showinfo("Result", "Please enter valid data!")    
+        messagebox.showinfo("Result", "Please enter valid data!") 
+ 
+         
  
 def all(): 
     try: 
@@ -96,7 +106,7 @@ window['bg'] = '#00115b'
 window.title('Dictionary') 
 window.geometry("600x375") 
 window.resizable(width=False, height=False) 
-window.iconbitmap(r'C:\Users\Admin-A\Desktop\icon.ico') 
+window.iconbitmap(r'C:\Users\ASUS\Desktop\icon.ico') 
  
 frame = Frame(window, bg='#00248b') 
 frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1) 
